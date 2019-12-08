@@ -47,4 +47,19 @@ const set<string> KEYWORD = {
     "if", "else", "while", "break", "continue", "return",
     "import", "export"};
 
+// FA具有的状态
+enum STATES {
+    STATE_I0,
+    STATE_I1,
+    STATE_I3,
+    STATE_I4,
+    STATE_I6,
+    STATE_I12,
+    STATE_I15,
+    STATE_I18,
+    STATE_I19,
+    STATE_I24,
+    STATE_I25
+};
+
 #endif
