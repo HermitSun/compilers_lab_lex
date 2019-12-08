@@ -138,17 +138,17 @@ KEYWORD -> number | string | void | CONTROL | MODULE
 
 #### 3.2. 采用自顶向下的方法将REs转化成NFAs
 
-![](./NFAs.jpg)
+![](./assets/NFAs.jpg)
 
 #### 3.3. 合并为一个单独的NFA
 
-![](./NFA.jpg)
+![](./assets/NFA.jpg)
 
 #### 3.4. 转换成DFA
 
 ##### 3.4.1. 转换表
 
-![](./DFA.png)
+![](./assets/DFA.png)
 
 可以看出这张表相当稀疏。
 
@@ -160,7 +160,7 @@ KEYWORD -> number | string | void | CONTROL | MODULE
 
 ##### 3.5.2. 构造DFAo
 
-![](./DFAo.jpg)
+![](./assets/DFAo.jpg)
 
 #### 3.6. 基于DFAo编写程序
 
