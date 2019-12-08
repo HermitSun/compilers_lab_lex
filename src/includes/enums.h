@@ -48,7 +48,7 @@ const set<string> KEYWORD = {
     "import", "export"};
 
 // FA具有的状态
-enum STATES {
+enum FA_STATES {
     STATE_I0,
     STATE_I1,
     STATE_I3,
