@@ -6,13 +6,13 @@
 
 ### 0. 截图
 
-#### 源文件目录截图
+#### 0.1. 源文件目录截图
 
-#### 资源文件截图
+#### 0.2. 资源文件截图
 
-#### 输入文件/流内容截图
+#### 0.3. 输入文件/流内容截图
 
-#### 输出token截图
+#### 0.4. 输出token截图
 
 ### 1. 词法和语法定义
 
@@ -70,11 +70,11 @@ export void say_hello(){
     number i = 0;
     while(i < 3){
         if(i == 1){
-            os->print(get_msg());
+            OS.print(get_msg());
             array[i] = i;
             continue;
         } else {
-            os->print(add(2, 1.0));
+            OS.print(add(2, 1.0));
             break;
         }
     }
@@ -156,7 +156,7 @@ KEYWORD -> number | string | void | CONTROL | MODULE
 
 ##### 3.5.1. 等价类划分
 
-
+![](./assets/Equivalent.jpg)
 
 ##### 3.5.2. 构造DFAo
 
