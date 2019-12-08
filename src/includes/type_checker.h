@@ -1,3 +1,5 @@
+#ifndef type_checker
+
 #include <string>
 using std::string;
 
@@ -43,3 +45,5 @@ bool is_separator(const char &c);
  * @return true是，false否
  */
 bool is_keyword(const string &s);
+
+#endif
