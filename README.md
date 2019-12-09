@@ -20,7 +20,9 @@
 
 #### 1.1. 设计理念
 
-尽可能简单的同时支持模块化。这门语言应当同时支持面向过程和基于对象（通过模块）。未来可能会增加对函数式的支持，至少也要把函数当成一等公民；但这次就算了，还没想好怎么弄。
+尽可能简单的同时支持模块化。这门语言应当同时支持面向过程和基于对象（通过模块）。
+
+函数是一等公民。
 
 这门语言不包含指针和位运算。我认为位运算的可读性较差，使用内置的函数代替。默认基本类型传值，模块传引用；提供深拷贝的内置函数。
 
@@ -36,21 +38,27 @@
 
 所以，我们需要的控制结构关键字：if | else | while | break | continue | return。
 
+布尔运算可以转换成等价的if-else语句，故并不打算提供语言机制来实现布尔运算。但可以内置函数来封装布尔运算逻辑。
+
+为了语言的健壮性，需要支持异常机制。所以我们需要的关键字：try、catch、throw。throws就不作为关键字了。
+
 为了支持模块化，我们需要的关键字：import | export。默认访问权限是模块内的，可以通过export对外暴露接口。可以通过.获取模块里export的内容；本来打算用`->`的，但感觉上`.`更符合使用习惯，而且更简单，更符合设计初衷。
 
-没有继承机制，通过对象间的委托进行交互。
+没有继承机制，通过对象间的委托进行交互。从某种意义上来说，这个语言是默认单例的。
 
 因为并没有类这个概念，没有实例化，也就不需要构造函数。
 
-语言的基本类型：数字、字符串、∅（包括未定义undefined和空值null，都可以用∅来概括；布尔值可以看作0和非0）。其中，基本类型应该包括字面量。所以，我们需要的类型有：number | string | void。其中，number应该包括负数和浮点数，但不打算使用科学计数法；字符串由""包裹，如果字符串中出现"，需要进行转义。
+语言的基本类型：数字、字符串、函数、∅（包括未定义undefined和空值null，都可以用∅来概括；布尔值可以看作0和非0）。其中，基本类型应该包括字面量。所以，我们需要的类型有：number | string | function | void。其中，number应该包括负数和浮点数，但不打算使用科学计数法；字符串由""包裹，如果字符串中出现"，需要进行转义。函数的类型自动推导。
 
 操作符应该包括：算术运算符、比较运算符、取值运算符、转义运算符
 
 所以，我们需要的关键字：operator -> + | - | * | / | ( | ) | < | > | <= | >= | == | != | = | [ | ] | . | \
 
-分隔符应该包括：separator -> ; | { | }。不支持,分隔符。
+分隔符应该包括：separator ->, | ; | { | }。
 
 只支持单行注释//，因为个人不太喜欢多行注释，并且在实践中感觉多行注释也没有那么大的作用。同时，字符串的优先级高于注释，也就是说，"//comment"会被视作一个完整的字符串，而不是一个未封闭的引号和一个单行注释。
+
+\n \r \f \t和空格算作空白符，除此之外的不可打印字符都不算。
 
 #### 1.3. 语言示例
 
@@ -60,13 +68,16 @@
 // Test.sw
 // OS.sw contains a function print
 import OS;
+// Exception.sw contains exception mechanisms
+import Exception;
+import MathOverflowException;
 
 // properties
 number array[10];
 Test next = void;
 
 // methods
-export void say_hello(){
+export void say_hello(function get_msg){
     number i = 0;
     while(i < 3){
         if(i == 1){
@@ -78,11 +89,18 @@ export void say_hello(){
             break;
         }
     }
-    Test t;
-    next = t;
+    try{
+        Test t;
+    	next = t;
+    }catch(Exception){
+        OS.print(Exception.what());
+    }
 }
 
-number add(number a, number b){
+number add(number a, number b) throw MathOverflowException{
+    if(a + b < MIN_NUMBER){
+        throw MathOverflowException;
+    }
     return a + b;
 }
 
@@ -125,7 +143,7 @@ STRING -> "((stringchar)*(\")*)*"
 
 OPERATOR -> + | - | * | / | ( | ) | < | > | <= | >= | == | != | = | [ | ] | -> | \
 
-SEPARATOR -> ; | { | }
+SEPARATOR -> , | ; | { | }
 
 CONTROL -> if | else | while | break | continue | return
 
@@ -133,7 +151,7 @@ COMMENT -> // allchar* \n
 
 MODULE -> import | export
 
-KEYWORD -> number | string | void | CONTROL | MODULE
+KEYWORD -> number | string | function | void | try | catch | throw | CONTROL | MODULE
 ```
 
 #### 3.2. 采用自顶向下的方法将REs转化成NFAs
