@@ -21,7 +21,7 @@ void reset_FA_and_trim(ifstream &in_file,
 
 bool analyze_lex(const string &in_path, const string &out_path)
 {
-    // 为确保有效，在末尾增加一个空白字符，结束时删掉
+    // 为确保“提前读”有效，在末尾增加一个空白字符，结束时删掉
     ofstream temp_stream(in_path, ios::app);
     temp_stream << " ";
     temp_stream.close();
@@ -37,7 +37,6 @@ bool analyze_lex(const string &in_path, const string &out_path)
     int lines_count = 1;
     // 读取文件
     char c;
-exist:
     while (in_file.get(c))
     {
         // 加入token中
@@ -46,6 +45,8 @@ exist:
         // cout << current_token << " " << current_state << endl;
 
         // 遇到换行，行数 + 1
+        // Windows和Linux的换行都包括\n
+        // 这里不考虑MacOS的\r，因为我没有Mac:-(
         if (c == '\n')
         {
             ++lines_count;
@@ -105,9 +106,11 @@ exist:
                 current_token_type = "SEPARATOR";
                 current_state = STATE_I1;
             }
-            // 其他字符跳出循环
+            // 其他字符视为错误，跳出循环
+            // 随便设置一个状态
             else
             {
+                current_state = STATE_I1;
                 goto exist;
             }
             break;
@@ -120,7 +123,7 @@ exist:
             if (is_letter(c) || is_digit(c) || c == '_')
             {
                 current_state = STATE_I3;
-                // TODO: 如果没有下一个字符，或者下一个是其他字符，重置状态
+                // 如果没有下一个字符，或者下一个是其他字符，重置状态
                 char next = in_file.peek();
                 if (!next ||
                     (!is_letter(next) && !is_digit(next) && next != '_'))
@@ -147,7 +150,7 @@ exist:
             if (is_digit(c))
             {
                 current_state = STATE_I4;
-                // TODO: 如果没有下一个字符，或者下一个不是数字，重置状态
+                // 如果没有下一个字符，或者下一个不是数字，重置状态
                 char next = in_file.peek();
                 if (!next || !is_digit(next))
                 {
@@ -182,11 +185,12 @@ exist:
             }
             break;
         case STATE_I12:
+            // 遇到'/'说明是注释
             if (c == '/')
             {
                 current_state = STATE_I18;
             }
-            // TODO: 其他字符不一定就是操作符
+            // 其他字符则是操作符
             else
             {
                 current_token_type = "OPERATOR";
@@ -218,7 +222,7 @@ exist:
             if (is_digit(c))
             {
                 current_state = STATE_I19;
-                // TODO: 如果没有下一个字符，或者下一个不是数字，重置状态
+                // 如果没有下一个字符，或者下一个不是数字，重置状态
                 char next = in_file.peek();
                 if (!next || !is_digit(next))
                 {
@@ -248,6 +252,7 @@ exist:
             break;
         }
     }
+exist:
     // 去掉额外添加的空白字符
     int temp_file = open(in_path.c_str(), O_RDWR);
     chsize(temp_file, filelength(temp_file) - 1);
@@ -256,7 +261,7 @@ exist:
     out_file.close();
     close(temp_file);
     // 结束时状态机没有重置
-    // TODO:只能说明有错误……
+    // 只能说明有错误……
     if (current_state != STATE_I0)
     {
         cout << "Error exist. Perhaps in line " + to_string(lines_count) + "." << endl;
