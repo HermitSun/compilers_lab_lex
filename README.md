@@ -4,15 +4,34 @@
 
 姓名：孙逸伦
 
-### 0. 截图
+### 0. 简介
 
 基于FA的实现，所以没有lex文件。
 
 #### 0.1. 源文件目录截图
 
+![](./assets/screenshot-src.png)
+
 #### 0.2. 输入文件/流内容截图
 
+输入文件较长，可以参见**1.3. 语言示例**。以下是部分内容截图：
+
+![](./assets/screenshot-input.png)
+
 #### 0.3. 输出token截图
+
+输出token较长，可以参见项目根目录下`Test_out_lex.txt`文件内容。以下是部分内容截图：
+
+![](./assets/screenshot-output.png)
+
+#### 0.4. 运行方法
+
+在项目`src/`目录下，执行如下语句：
+
+```c++
+g++ main.cpp utils/type_checker.cpp utils/lex_analyzer.cpp -o main
+./main
+```
 
 ### 1. 词法和语法定义
 
