@@ -10,7 +10,7 @@ number array[10];
 Test next = void;
 
 // methods
-export void say_hello(){
+export void say_hello(function get_msg){
     number i = 0;
     while(i < 3){
         if(i == 1){
