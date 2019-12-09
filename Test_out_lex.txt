@@ -27,6 +27,8 @@
 (void, KEYWORD)
 (say_hello, ID)
 ((, OPERATOR)
+(function, KEYWORD)
+(get_msg, ID)
 (), OPERATOR)
 ({, SEPARATOR)
 (number, KEYWORD)
