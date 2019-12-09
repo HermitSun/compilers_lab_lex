@@ -1,5 +1,11 @@
 #ifndef enums
 
+#if defined(__linux__)
+#define ENTER_LENGTH 1
+#elif defined(_WIN32)
+#define ENTER_LENGTH 2
+#endif
+
 #include <set>
 #include <string>
 using std::set;
@@ -48,18 +54,19 @@ const set<string> KEYWORD = {
     "import", "export"};
 
 // FA具有的状态
-enum FA_STATES {
-    STATE_I0,
-    STATE_I1,
-    STATE_I3,
-    STATE_I4,
-    STATE_I6,
-    STATE_I12,
-    STATE_I15,
-    STATE_I18,
-    STATE_I19,
-    STATE_I24,
-    STATE_I25
+enum FA_STATES
+{
+    STATE_I0 = 0,
+    STATE_I1 = 1,
+    STATE_I3 = 3,
+    STATE_I4 = 4,
+    STATE_I6 = 6,
+    STATE_I12 = 12,
+    STATE_I15 = 15,
+    STATE_I18 = 18,
+    STATE_I19 = 19,
+    STATE_I24 = 24,
+    STATE_I25 = 25
 };
 
 #endif
