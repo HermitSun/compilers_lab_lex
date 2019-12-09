@@ -8,6 +8,6 @@ using std::string;
  * @param in_path 输入文件路径
  * @param out_path 输出文件路径
  */
-void analyze_lex(const string &in_path, const string &out_path);
+bool analyze_lex(const string &in_path, const string &out_path);
 
 #endif
