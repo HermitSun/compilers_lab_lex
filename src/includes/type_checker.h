@@ -45,5 +45,11 @@ bool is_separator(const char &c);
  * @return true是，false否
  */
 bool is_keyword(const string &s);
+/**
+ * 判断是否是空白符
+ * @param c 待判断字符
+ * @return true是，false否
+ */
+bool is_whitespace(const char &c);
 
 #endif

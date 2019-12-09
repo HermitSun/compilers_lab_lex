@@ -35,3 +35,12 @@ bool is_keyword(const string &s)
 {
     return KEYWORD.find(s) != KEYWORD.end();
 }
+
+bool is_whitespace(const char &c)
+{
+    return c == ' ' ||
+           c == '\t' ||
+           c == '\n' ||
+           c == '\r' ||
+           c == '\f';
+}
