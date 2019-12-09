@@ -40,16 +40,19 @@ const set<char> digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 const set<string> OPERATOR = {"+", "-", "*", "/", "(", ")", "<", ">", "<=", ">=", "==", "!=",
                               "=", "[", "]", ".", "\\"};
 // 分隔符
-const set<char> SEPARATOR = {';', '{', '}'};
+const set<char> SEPARATOR = {',', ';', '{', '}'};
 // 注释
 const set<char> COMMENT = {'/', '\n'};
 // 控制
 const set<string> CONTROL = {"if", "else", "while", "break", "continue", "return"};
 // 模块
 const set<string> MODULE = {"import", "export"};
+// 异常
+const set<string> EXCEPTION = {"try", "catch", "throw"};
 // 关键字
 const set<string> KEYWORD = {
     "number", "string", "void",
+    "try", "catch", "throw",
     "if", "else", "while", "break", "continue", "return",
     "import", "export"};
 
