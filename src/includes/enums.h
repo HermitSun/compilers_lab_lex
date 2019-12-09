@@ -51,7 +51,7 @@ const set<string> MODULE = {"import", "export"};
 const set<string> EXCEPTION = {"try", "catch", "throw"};
 // 关键字
 const set<string> KEYWORD = {
-    "number", "string", "void",
+    "number", "string", "function", "void",
     "try", "catch", "throw",
     "if", "else", "while", "break", "continue", "return",
     "import", "export"};
