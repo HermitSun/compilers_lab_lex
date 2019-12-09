@@ -1,6 +1,9 @@
 // Test.sw
 // OS.sw contains a function print
 import OS;
+// Exception.sw contains exception mechanisms
+import Exception;
+import MathOverflowException;
 
 // properties
 number array[10];
@@ -19,11 +22,18 @@ export void say_hello(){
             break;
         }
     }
-    Test t;
-    next = t;
+    try{
+        Test t;
+    	next = t;
+    }catch(Exception){
+        OS.print(Exception.what());
+    }
 }
 
-number add(number a, number b){
+number add(number a, number b) throw MathOverflowException{
+    if(a + b < MIN_NUMBER){
+        throw MathOverflowException;
+    }
     return a + b;
 }
 
