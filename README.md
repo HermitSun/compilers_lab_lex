@@ -130,7 +130,7 @@ string get_msg(){
 
 ### 2. 步骤简介
 
-基于FA的解决方案（硬编码）
+基于FA的解决方案（并且是硬编码）
 
 1. 预先定义正规表达式REs
 2. 采用自顶向下的方法将REs转化成NFAs
@@ -182,6 +182,8 @@ KEYWORD -> number | string | function | void | try | catch | throw | CONTROL | M
 ![](./assets/NFA.jpg)
 
 #### 3.4. 转换成DFA
+
+虽然每个终态都有自己的含义，但适当合并一些终态能减低编码的复杂度。比如，虽然ID和KEYWORD的意义不同，但如果共享同一个终态，然后在编码时进行判断，事实上是可以简化工作的。
 
 ##### 3.4.1. 转换表
 
